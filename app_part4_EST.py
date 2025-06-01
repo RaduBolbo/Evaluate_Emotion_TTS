@@ -122,7 +122,6 @@ class ESTApp:
 
         pair = self.est_pairs[self.current_index]
 
-        # Randomize order
         order = random.choice(["HL", "LH"])
         if order == "HL":
             file1, file2 = pair["file_high"], pair["file_low"]
@@ -140,7 +139,7 @@ class ESTApp:
         self.window = tk.Toplevel(self.root)
         self.window.title(f"EST Evaluation - {self.current_index + 1}/{len(self.est_pairs)}")
 
-        Label(self.window, text=f"Which clip expresses the emotion '{pair['emotion']}' more strongly?").pack(pady=10)
+        Label(self.window, text=f"Which clip expresses the emotion '{pair['emotion']}' stronger?").pack(pady=10)
 
         Button(self.window, text="Play First Audio", command=lambda: self.audio_player.play(file1)).pack(pady=5)
         Button(self.window, text="Play Second Audio", command=lambda: self.audio_player.play(file2)).pack(pady=5)
@@ -153,7 +152,7 @@ class ESTApp:
         with open(result_path, "w") as f:
             json.dump(self.results, f, indent=4)
         messagebox.showinfo("Finished", f"✅ EST test completed.\nSaved to: {result_path}\n"
-                                        f"📧 Send it to radu.bolborici@gmail.com")
+                                        f"📧 Now proceed to the 2nd experiemnt by running `python app_part5_EDiT.py`")
         self.root.quit()
 
 if __name__ == "__main__":

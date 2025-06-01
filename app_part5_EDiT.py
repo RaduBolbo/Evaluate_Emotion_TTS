@@ -103,7 +103,7 @@ class EDiTApp:
 
     def record_answer(self, selected):
         example = self.edit_files[self.current_index]
-        correct = (selected == "target")  # We assume target is the goal
+        correct = (selected == "target")
         self.results["responses"].append({
             "model": example["model"],
             "file": example["file_name"],
@@ -123,7 +123,7 @@ class EDiTApp:
         with open(result_path, "w") as f:
             json.dump(self.results, f, indent=4)
         messagebox.showinfo("Finished", f"✅ EDiT test completed.\nSaved to: {result_path}\n"
-                                        f"📧 Send it to radu.bolborici@gmail.com")
+                                        f"📧 Send contents of `results` folder it to radu.bolborici@gmail.com")
         self.root.quit()
 
 

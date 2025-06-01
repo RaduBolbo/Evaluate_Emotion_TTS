@@ -72,7 +72,6 @@ class EDTApp:
             if not os.path.isdir(model_path):
                 continue
 
-            # Group all wav files by phrase ID (e.g., phrase_1)
             phrase_groups = {}
             for fname in os.listdir(model_path):
                 if not fname.endswith(AUDIO_EXT):
@@ -153,11 +152,9 @@ class EDTApp:
     def record_choice(self, choice):
         pair = self.edt_pairs[self.current_index]
 
-        # Get actual emotion of each file
         emo1 = self.parse_edt_filename(os.path.basename(pair["file1"]))["emotion"]
         emo2 = self.parse_edt_filename(os.path.basename(pair["file2"]))["emotion"]
 
-        # Find which file contains emotion1
         expected_emotion = pair["emotion1"]
         correct_file = "file1" if emo1 == expected_emotion else "file2"
 
@@ -185,7 +182,7 @@ class EDTApp:
             json.dump(self.results, f, indent=4)
 
         messagebox.showinfo("Finished", f"✅ EDT test completed.\nResults saved to: {result_path}\n"
-                                        f"📧 Please send the file to radu.bolborici@gmail.com")
+                                        f"📧 Now proceed to the 2nd experiemnt by running `python app_part3_EIT.py`")
         self.root.quit()
 
 

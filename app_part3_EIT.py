@@ -125,7 +125,7 @@ class EITApp:
             json.dump(self.results, f, indent=4)
 
         messagebox.showinfo("Finished", f"✅ EIT test completed.\nResults saved to: {result_path}\n"
-                                        f"📧 Please send the file to radu.bolborici@gmail.com")
+                                        f"📧 Now proceed to the 2nd experiemnt by running `python app_part4_EST.py`")
         self.root.quit()
 
 

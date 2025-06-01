@@ -130,35 +130,27 @@ class EvaluationApp:
             Button(score_window, text=str(i), command=lambda s=i: rate_audio(s)).pack(pady=2)
 
     def run_edt_test(self):
-        # Stub for EDT
         self.results["responses"]["EDT"] = []
-        # You would iterate model -> phrase -> 2 files, play both, ask which has EMOTION1
         self.run_next_test()
 
     def run_eit_test(self):
-        # Stub for EIT
         self.results["responses"]["EIT"] = []
-        # You would iterate model -> emotion -> files, ask user to guess emotion
         self.run_next_test()
 
     def run_est_test(self):
-        # Stub for EST
         self.results["responses"]["EST"] = []
-        # You would compare two versions of same file (HIGH/LOW strength) and ask user which is stronger
         self.run_next_test()
 
     def run_edit_test(self):
-        # Stub for EDiT
         self.results["responses"]["EDiT"] = []
-        # You would play each file and ask if it contains EMOTION1 or EMOTION2
         self.run_next_test()
 
     def finish_experiment(self):
-        result_path = os.path.join(RESULTS_DIR, f"{self.run_name}.json")
+        result_path = os.path.join(RESULTS_DIR, f"{self.run_name}_naturalness.json")
         with open(result_path, "w") as f:
             json.dump(self.results, f, indent=4)
         messagebox.showinfo("Finished", f"Experiment finished! Results saved to {result_path}.\n"
-                                        f"Please send the file to radu.bolborici@gmail.com")
+                                        f"Now proceed to the 2nd experiemnt by running `python app_part2_EDT.py`")
         self.root.quit()
 
 
