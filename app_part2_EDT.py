@@ -161,7 +161,7 @@ class EDTApp:
 
         Button(self.window, text="First Audio is better", command=lambda: self.record_choice("file1")).pack(pady=5)
         Button(self.window, text="Second Audio is better", command=lambda: self.record_choice("file2")).pack(pady=5)
-        '''
+    '''
 
     # def record_choice(self, choice):
     #     pair = self.edt_pairs[self.current_index]
