@@ -22,10 +22,14 @@ Or download manualy the archive from https://drive.google.com/file/d/14rccGeMWVn
 
 3) Then, run the 5 applications, one after another:
 
-python app_part1_naturalness.py
-python app_part2_EDT.py
-python app_part3_EIT.py
-python app_part4_EST.py
-python app_part5_EDiT.py
+`python app_part1_naturalness.py` -> ⚠️ You may have to listen to the audio clip more than once. Sometimes, the player may introduce distortions that are not present in the actual audio signal ⚠️
+
+`python app_part2_EDT.py`
+
+`python app_part3_EIT.py`
+
+`python app_part4_EST.py`
+
+`python app_part5_EDiT.py`
 
 4) Finally, send the contents of the `results` folder to radu.bolborici@gmail.com.
