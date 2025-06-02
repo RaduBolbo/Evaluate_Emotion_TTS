@@ -109,7 +109,40 @@ class EDTApp:
             return {"emotion": parts[emotion_index + 1]}
         except Exception:
             return None
+        
 
+
+    def show_next_pair(self):
+        if self.current_index >= len(self.edt_pairs):
+            self.finish_experiment()
+            return
+
+        pair = self.edt_pairs[self.current_index]
+        emotion_text = pair['emotion1'].upper()
+
+        self.window = tk.Toplevel(self.root)
+        self.window.title(f"EDT Evaluation - Pair {self.current_index + 1}/{len(self.edt_pairs)}")
+
+        main_frame = Frame(self.window)
+        main_frame.pack(padx=20, pady=20)
+
+        # === Step 1 ===
+        Label(main_frame, text="Step 1: Listen to both of the audio samples", font=("Arial", 10, "bold")).pack(pady=(0, 10))
+
+        Button(main_frame, text="Play First Audio", width=30, command=lambda: self.audio_player.play(pair["file1"])).pack(pady=5)
+        Button(main_frame, text="Play Second Audio", width=30, command=lambda: self.audio_player.play(pair["file2"])).pack(pady=5)
+
+        # === Step 2 ===
+        Label(main_frame, text="Step 2: Choose which audio better expresses the emotion", font=("Arial", 10)).pack(pady=(20, 0))
+        Label(main_frame, text=emotion_text, font=("Arial", 10, "bold")).pack()
+        Label(main_frame, text="Do not account for naturalness.", font=("Arial", 10)).pack(pady=(0, 10))
+
+        Button(main_frame, text="First Audio is better", width=30, command=lambda: self.record_choice("file1")).pack(pady=5)
+        Button(main_frame, text="Second Audio is better", width=30, command=lambda: self.record_choice("file2")).pack(pady=5)
+
+
+
+    '''
     def show_next_pair(self):
         if self.current_index >= len(self.edt_pairs):
             self.finish_experiment()
@@ -128,6 +161,7 @@ class EDTApp:
 
         Button(self.window, text="First Audio is better", command=lambda: self.record_choice("file1")).pack(pady=5)
         Button(self.window, text="Second Audio is better", command=lambda: self.record_choice("file2")).pack(pady=5)
+        '''
 
     # def record_choice(self, choice):
     #     pair = self.edt_pairs[self.current_index]

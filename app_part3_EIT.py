@@ -85,6 +85,7 @@ class EITApp:
                     })
         random.shuffle(self.eit_items)
 
+    '''
     def show_next_audio(self):
         if self.current_index >= len(self.eit_items):
             self.finish_experiment()
@@ -101,7 +102,31 @@ class EITApp:
 
         for emotion in EMOTIONS:
             Button(self.window, text=emotion, command=lambda e=emotion: self.record_answer(e)).pack(pady=3)
+    '''
+    def show_next_audio(self):
+        if self.current_index >= len(self.eit_items):
+            self.finish_experiment()
+            return
 
+        item = self.eit_items[self.current_index]
+
+        self.window = tk.Toplevel(self.root)
+        self.window.title(f"EIT Evaluation - {self.current_index + 1}/{len(self.eit_items)}")
+
+        main_frame = Frame(self.window)
+        main_frame.pack(padx=20, pady=20)
+
+        # Step 1: Listen to audio
+        Label(main_frame, text="Step 1: Listen to the audio sample", font=("Arial", 10, "bold")).pack(pady=(0, 10))
+        Button(main_frame, text="Play Audio", width=30, command=lambda: self.audio_player.play(item["file"])).pack(pady=(0, 20))
+
+        # Step 2: Select emotion
+        Label(main_frame, text="Step 2: Select the emotion you believe is expressed in the audio", font=("Arial", 10)).pack(pady=(0, 10))
+
+        for emotion in EMOTIONS:
+            Button(main_frame, text=emotion, width=30, command=lambda e=emotion: self.record_answer(e)).pack(pady=3)
+
+            
     def record_answer(self, selected_emotion):
         item = self.eit_items[self.current_index]
         correct = (selected_emotion == item["expected_emotion"])

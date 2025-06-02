@@ -123,11 +123,31 @@ class EvaluationApp:
         score_window = tk.Toplevel(self.root)
         score_window.title("Rate Naturalness")
 
-        Label(score_window, text="Listen to the audio and rate its naturalness (0–5):").pack()
-        Button(score_window, text="Play", command=lambda: self.audio_player.play(audio_path)).pack()
+        Label(score_window, text="Step 1: Press 'Play' to listen to the audio 1–2 times").pack(pady=(10, 5))
+        Button(score_window, text="Play", command=lambda: self.audio_player.play(audio_path)).pack(pady=(0, 10))
+
+        separator = tk.Frame(score_window, height=2, bd=1, relief=tk.SUNKEN)
+        separator.pack(fill=tk.X, padx=5, pady=5)
+
+        Label(score_window, text="Step 2: Rate the audio's naturalness by clicking one of the buttons below").pack(pady=(5, 10))
+
+        rating_frame = Frame(score_window)
+        rating_frame.pack(pady=5)
+
+        descriptions = [
+            "0 = Noise or Extremely robotic",
+            "1 = Very robotic",
+            "2 = Robotic",
+            "3 = Natural, but noisy or distorted",
+            "4 = Natural, but you think it is still not a real voice",
+            "5 = Very natural, human voice"
+        ]
 
         for i in range(6):
-            Button(score_window, text=str(i), command=lambda s=i: rate_audio(s)).pack(pady=2)
+            row = Frame(rating_frame)
+            row.pack(anchor="w", pady=2)
+            Button(row, text=str(i), width=5, command=lambda s=i: rate_audio(s)).pack(side="left", padx=(0, 10))
+            Label(row, text=descriptions[i], anchor="w", justify="left").pack(side="left")
 
     def run_edt_test(self):
         self.results["responses"]["EDT"] = []

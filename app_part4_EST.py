@@ -115,6 +115,7 @@ class ESTApp:
         self.current_index += 1
         self.show_next_pair()
 
+    '''
     def show_next_pair(self):
         if self.current_index >= len(self.est_pairs):
             self.finish_experiment()
@@ -146,7 +147,48 @@ class ESTApp:
 
         Button(self.window, text="First Audio is stronger", command=lambda: self.record_answer("First")).pack(pady=5)
         Button(self.window, text="Second Audio is stronger", command=lambda: self.record_answer("Second")).pack(pady=5)
+    '''
 
+    def show_next_pair(self):
+        if self.current_index >= len(self.est_pairs):
+            self.finish_experiment()
+            return
+
+        pair = self.est_pairs[self.current_index]
+
+        order = random.choice(["HL", "LH"])
+        if order == "HL":
+            file1, file2 = pair["file_high"], pair["file_low"]
+            correct_choice = "First"
+        else:
+            file1, file2 = pair["file_low"], pair["file_high"]
+            correct_choice = "Second"
+
+        self.current_order = {
+            "file1": file1,
+            "file2": file2,
+            "correct_choice": correct_choice
+        }
+
+        self.window = tk.Toplevel(self.root)
+        self.window.title(f"EST Evaluation - {self.current_index + 1}/{len(self.est_pairs)}")
+
+        main_frame = Frame(self.window)
+        main_frame.pack(padx=20, pady=20)
+
+        # Step 1
+        Label(main_frame, text=f"Step 1: Listen to both {pair['emotion'].upper()} audio samples", font=("Arial", 10, "bold")).pack(pady=(0, 10))
+        Button(main_frame, text="Play First Audio", width=30, command=lambda: self.audio_player.play(file1)).pack(pady=5)
+        Button(main_frame, text="Play Second Audio", width=30, command=lambda: self.audio_player.play(file2)).pack(pady=5)
+
+        # Step 2
+        Label(main_frame, text="Step 2: Choose which audio expresses the emotion", font=("Arial", 10)).pack(pady=(20, 0))
+        Label(main_frame, text=pair['emotion'].upper(), font=("Arial", 10, "bold")).pack()
+        Label(main_frame, text="more strongly.", font=("Arial", 10)).pack(pady=(0, 10))
+
+        Button(main_frame, text="First Audio is stronger", width=30, command=lambda: self.record_answer("First")).pack(pady=5)
+        Button(main_frame, text="Second Audio is stronger", width=30, command=lambda: self.record_answer("Second")).pack(pady=5)
+        
     def finish_experiment(self):
         result_path = os.path.join(RESULTS_DIR, f"{self.run_name}_EST.json")
         with open(result_path, "w") as f:

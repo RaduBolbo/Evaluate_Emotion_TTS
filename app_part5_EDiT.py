@@ -83,6 +83,7 @@ class EDiTApp:
 
         random.shuffle(self.edit_files)
 
+    '''
     def show_next_file(self):
         if self.current_index >= len(self.edit_files):
             self.finish_experiment()
@@ -100,6 +101,31 @@ class EDiTApp:
                command=lambda: self.record_answer("source")).pack(pady=5)
         Button(self.window, text=f"{example['target']}",
                command=lambda: self.record_answer("target")).pack(pady=5)
+    '''
+
+    def show_next_file(self):
+        if self.current_index >= len(self.edit_files):
+            self.finish_experiment()
+            return
+
+        example = self.edit_files[self.current_index]
+
+        self.window = tk.Toplevel(self.root)
+        self.window.title(f"EDiT Evaluation - {self.current_index + 1}/{len(self.edit_files)}")
+
+        main_frame = Frame(self.window)
+        main_frame.pack(padx=20, pady=20)
+
+        # Step 1: Listen
+        Label(main_frame, text="Step 1: Listen to the audio sample", font=("Arial", 10, "bold")).pack(pady=(0, 10))
+        Button(main_frame, text="Play Audio", width=30, command=lambda: self.audio_player.play(example["file"])).pack(pady=5)
+
+        # Step 2: Choose emotion
+        Label(main_frame, text="Step 2: Choose the emotion you hear most clearly in this audio", font=("Arial", 10)).pack(pady=(20, 10))
+
+        Button(main_frame, text=example['source'], width=30, command=lambda: self.record_answer("source")).pack(pady=5)
+        Button(main_frame, text=example['target'], width=30, command=lambda: self.record_answer("target")).pack(pady=5)
+
 
     def record_answer(self, selected):
         example = self.edit_files[self.current_index]
